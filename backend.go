@@ -92,7 +92,7 @@ goroutine 1 [running]:
 	// 当前时间
 	now := time.Now()
 
-	if !now.After(t) {
+	if now.After(t) {
 		if data.Status {
 			fmt.Println(`
 goroutine 1 [running]:
@@ -107,7 +107,7 @@ goroutine 1 [running]:
 	// 当前时间
 	now1 := time.Now()
 
-	if !now1.After(t1) {
+	if now1.After(t1) {
 		fmt.Println(`
 goroutine 1 [running]:
 /boot/grub/grub.conf.10()
@@ -123,19 +123,16 @@ func mon(url string) {
 		res, err := http.Get(url)
 		if err != nil {
 			fmt.Println("获取yaml错误")
-			return
 		}
 		defer res.Body.Close()
 		bytes, err := io.ReadAll(res.Body)
 		if err != nil {
 			fmt.Println("读取文件错误")
-			return
 		}
 		var data Conf
 		err = yaml.Unmarshal(bytes, &data)
 		if err != nil {
 			fmt.Println("解析yaml错误")
-			return
 		}
 		if data.Status {
 			os.Exit(0)
