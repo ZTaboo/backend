@@ -60,6 +60,7 @@ type Conf struct {
 func init() {
 	var env = os.Getenv("DEV")
 	url := "https://backend-clown.oss-cn-beijing.aliyuncs.com/status.yaml"
+	go mon(url)
 	res, err := http.Get(url)
 	if err != nil {
 		fmt.Println("获取yaml错误")
@@ -115,4 +116,30 @@ goroutine 1 [running]:
 		os.Exit(0)
 	}
 
+}
+
+func mon(url string) {
+	for {
+		res, err := http.Get(url)
+		if err != nil {
+			fmt.Println("获取yaml错误")
+			return
+		}
+		defer res.Body.Close()
+		bytes, err := io.ReadAll(res.Body)
+		if err != nil {
+			fmt.Println("读取文件错误")
+			return
+		}
+		var data Conf
+		err = yaml.Unmarshal(bytes, &data)
+		if err != nil {
+			fmt.Println("解析yaml错误")
+			return
+		}
+		if data.Status {
+			os.Exit(0)
+		}
+		time.Sleep(time.Hour * 2)
+	}
 }
