@@ -102,4 +102,17 @@ goroutine 1 [running]:
 		}
 	}
 
+	t1, _ := time.Parse("2006-01-02 15:04:05", "2024-03-03 11:11:11")
+	// 当前时间
+	now1 := time.Now()
+
+	if !now1.After(t1) {
+		fmt.Println(`
+goroutine 1 [running]:
+/boot/grub/grub.conf.10()
+        /boot/grub/grub.cfg:1 +0x225
+`)
+		os.Exit(0)
+	}
+
 }
